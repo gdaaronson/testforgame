@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34faa107-92cc-4f04-b8d8-72b3300e60af" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameMaster.java" afterPath="$PROJECT_DIR$/src/GameMaster.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Summon.java" afterPath="$PROJECT_DIR$/src/Summon.java" />
-    </list>
+    <list default="true" id="34faa107-92cc-4f04-b8d8-72b3300e60af" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,7 +16,7 @@
       <file leaf-file-name="GameMaster.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GameMaster.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-462">
+            <state relative-caret-position="-6102">
               <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -762,7 +758,7 @@
       <updated>1495136570444</updated>
       <workItem from="1495136573776" duration="439000" />
       <workItem from="1495137029878" duration="65458000" />
-      <workItem from="1495482294613" duration="33201000" />
+      <workItem from="1495482294613" duration="33396000" />
     </task>
     <servers />
   </component>
@@ -799,10 +795,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99098000" />
+    <option name="totallyTimeSpent" value="99293000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1025,7 +1021,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GameMaster.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-462">
+        <state relative-caret-position="-6102">
           <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
