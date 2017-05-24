@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34faa107-92cc-4f04-b8d8-72b3300e60af" name="Default" comment="" />
+    <list default="true" id="34faa107-92cc-4f04-b8d8-72b3300e60af" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameMaster.java" afterPath="$PROJECT_DIR$/src/GameMaster.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Summon.java" afterPath="$PROJECT_DIR$/src/Summon.java" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,8 +20,8 @@
       <file leaf-file-name="GameMaster.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GameMaster.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2457">
-              <caret line="136" column="5" lean-forward="true" selection-start-line="136" selection-start-column="5" selection-end-line="136" selection-end-column="5" />
+            <state relative-caret-position="-462">
+              <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -28,8 +32,8 @@
       <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="777">
-              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state relative-caret-position="189">
+              <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
               <folding>
                 <element signature="e#1734#1735#0" expanded="true" />
                 <element signature="e#1768#1769#0" expanded="true" />
@@ -72,8 +76,8 @@
       <file leaf-file-name="Summon.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Summon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="12" column="8" lean-forward="false" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+            <state relative-caret-position="252">
+              <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -112,8 +116,8 @@
         <option value="$PROJECT_DIR$/src/Card.java" />
         <option value="$PROJECT_DIR$/tests/PlayerTest.java" />
         <option value="$PROJECT_DIR$/src/Player.java" />
-        <option value="$PROJECT_DIR$/src/GameMaster.java" />
         <option value="$PROJECT_DIR$/src/Summon.java" />
+        <option value="$PROJECT_DIR$/src/GameMaster.java" />
       </list>
     </option>
   </component>
@@ -226,7 +230,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in TestGame">
+  <component name="RunManager" selected="Application.GameMaster">
     <configuration default="false" name="GameMaster" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="GameMaster" />
@@ -738,10 +742,10 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.All in TestGame" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.SummonTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.SummonTest.defaultSummonTest" />
-        <item index="3" class="java.lang.String" itemvalue="Application.GameMaster" />
+        <item index="0" class="java.lang.String" itemvalue="Application.GameMaster" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.All in TestGame" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.SummonTest" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.SummonTest.defaultSummonTest" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.PlayerTest" />
       </list>
     </recent_temporary>
@@ -758,12 +762,15 @@
       <updated>1495136570444</updated>
       <workItem from="1495136573776" duration="439000" />
       <workItem from="1495137029878" duration="65458000" />
-      <workItem from="1495482294613" duration="24192000" />
+      <workItem from="1495482294613" duration="33201000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
     <history-entry file="All_in_TestGame - 2017.05.24 at 10h 28m 41s.xml">
+      <configuration name="All in TestGame" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_TestGame - 2017.05.24 at 14h 42m 14s.xml">
       <configuration name="All in TestGame" configurationId="JUnit" />
     </history-entry>
     <history-entry file="DeckTest - 2017.05.22 at 13h 23m 15s.xml">
@@ -784,9 +791,6 @@
     <history-entry file="PlayerTest - 2017.05.22 at 13h 46m 55s.xml">
       <configuration name="PlayerTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="SummonTest - 2017.05.22 at 13h 23m 10s.xml">
-      <configuration name="SummonTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="SummonTest - 2017.05.24 at 10h 06m 08s.xml">
       <configuration name="SummonTest" configurationId="JUnit" />
     </history-entry>
@@ -795,7 +799,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="90089000" />
+    <option name="totallyTimeSpent" value="99098000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -840,7 +844,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="36" />
+      <option name="time" value="37" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -998,8 +1002,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        <state relative-caret-position="189">
+          <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
           <folding>
             <element signature="e#1734#1735#0" expanded="true" />
             <element signature="e#1768#1769#0" expanded="true" />
@@ -1013,16 +1017,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Summon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="12" column="8" lean-forward="false" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+        <state relative-caret-position="252">
+          <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GameMaster.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2457">
-          <caret line="136" column="5" lean-forward="true" selection-start-line="136" selection-start-column="5" selection-end-line="136" selection-end-column="5" />
+        <state relative-caret-position="-462">
+          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

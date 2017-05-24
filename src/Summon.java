@@ -14,7 +14,7 @@ public class Summon extends Card {
         attack = 1;
         health = 1;
         attacked = true;
-        setCardArt(new Rectangle());
+        setCardArt(new Rectangle(60,120));
         attacked = true;
     }
 
