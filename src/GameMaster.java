@@ -16,8 +16,7 @@ import javafx.stage.Stage;
  */
 public class GameMaster extends Application {
     
-    private Player p1;
-    private Player p2;
+    private Player[] p;
     private int turn;
     private Group root;
 
@@ -29,10 +28,11 @@ public class GameMaster extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         //declare and initalize stuff
-        p1 = new Player();
-        p2 = new Player();
-        p1.drawCard(3);
-        p2.drawCard(4);
+        p = new Player[2];
+        p[0] = new Player();
+        p[1] = new Player();
+        p[0].drawCard(3);
+        p[1].drawCard(4);
         root = new Group();
         turn = 0;
         drawBattleField();
@@ -70,49 +70,33 @@ public class GameMaster extends Application {
         primaryStage.show();
     }
 
-
-    private void battle21(Summon cardBeingDragged, Summon opponentsSummon) {
-        int defendersNewHealth = opponentsSummon.getHealth() - cardBeingDragged.getAttack();
-        if (defendersNewHealth <= 0) {
-            p1.getBattleField().getCards().remove(opponentsSummon);
-            p1.getBelow().getCards().add(opponentsSummon);
+    private void updateBattleField(Player p, Summon summon, int newHealth, boolean attacker) {
+        if (newHealth <= 0) {
+            p.getBattleField().getCards().remove(summon);
+            p.getBelow().getCards().add(summon);
         } else {
-            opponentsSummon.setHealth(defendersNewHealth);
-            opponentsSummon.setAttacked(true);
-        }
-        int attackersNewHealth = cardBeingDragged.getHealth() - opponentsSummon.getAttack();
-        if (attackersNewHealth <= 0) {
-            p2.getBattleField().getCards().remove(cardBeingDragged);
-            p2.getBelow().getCards().add(cardBeingDragged);
-        } else {
-            cardBeingDragged.setHealth(attackersNewHealth);
-            cardBeingDragged.setAttacked(true);
+            summon.setHealth(newHealth);
+            if(attacker){
+                summon.setAttacked(true);
+            }
         }
     }
 
-    private void battle12(Summon cardBeingDragged, Summon opponentsSummon) {
-        int defendersNewHealth = opponentsSummon.getHealth() - cardBeingDragged.getAttack();
-        if (defendersNewHealth <= 0) {
-            p2.getBelow().getCards().add(opponentsSummon);
-            p2.getBattleField().getCards().remove(opponentsSummon);
-        } else {
-            opponentsSummon.setHealth(defendersNewHealth);
-        }
-        int attackersNewHealth = cardBeingDragged.getHealth() - opponentsSummon.getAttack();
-        if (attackersNewHealth <= 0) {
-            p1.getBelow().getCards().add(cardBeingDragged);
-            p1.getBattleField().getCards().remove(cardBeingDragged);
-        } else {
-            cardBeingDragged.setHealth(attackersNewHealth);
-            cardBeingDragged.setAttacked(true);
-        }
+    private void battle21(Summon attacker, Summon defender) {
+        updateBattleField(p[0], defender, defender.getHealth() - attacker.getAttack(), false);
+        updateBattleField(p[1], attacker, attacker.getHealth() - defender.getAttack(), true);
+    }
+
+    private void battle12(Summon attacker, Summon defender) {
+        updateBattleField(p[1], defender, defender.getHealth() - attacker.getAttack(), false);
+        updateBattleField(p[0], attacker, attacker.getHealth() - defender.getAttack(), true);
     }
 
     private void onDrag(MouseEvent event) {
         if (turn % 2 == 1) {
-            locateAndMoveCard(event, p1);
+            locateAndMoveCard(event, p[0]);
         } else if (turn % 2 == 0) {
-            locateAndMoveCard(event, p2);
+            locateAndMoveCard(event, p[1]);
         }
     }
 
@@ -164,37 +148,37 @@ public class GameMaster extends Application {
 
     private void onDrop(MouseEvent event) {
         if (turn % 2 == 1) {
-            Card cardToBePlayed = identifyCardToBePlayed(event, p1);
+            Card cardToBePlayed = identifyCardToBePlayed(event, p[0]);
             if(cardToBePlayed != null){
-                p1.playCard(cardToBePlayed);
+                p[0].playCard(cardToBePlayed);
                 return;
             }
-            Card attacker = getCardFromBattleField(event, p1);
-            Card defender = getCardFromBattleField(event, p2);
+            Card attacker = getCardFromBattleField(event, p[0]);
+            Card defender = getCardFromBattleField(event, p[1]);
             if(attacker != null && defender != null){
                 battle12((Summon) attacker,(Summon) defender);
-                if(p1.getBelow().getCards().contains(attacker)){
+                if(p[0].getBelow().getCards().contains(attacker)){
                     attacker.getCardArt().setFill(Color.BROWN);
                 }
-                if(p2.getBelow().getCards().contains(defender)){
+                if(p[1].getBelow().getCards().contains(defender)){
                     defender.getCardArt().setFill(Color.BROWN);
                 }
             }
             drawCardsInHandP1();
         } else if (turn % 2 == 0) {
-            Card cardToBePlayed = identifyCardToBePlayed(event, p2);
+            Card cardToBePlayed = identifyCardToBePlayed(event, p[1]);
             if(cardToBePlayed != null){
-                p2.playCard(cardToBePlayed);
+                p[1].playCard(cardToBePlayed);
                 return;
             }
-            Card attacker = getCardFromBattleField(event, p2);
-            Card defender = getCardFromBattleField(event, p1);
+            Card attacker = getCardFromBattleField(event, p[1]);
+            Card defender = getCardFromBattleField(event, p[0]);
             if(attacker != null && defender != null){
                 battle21((Summon) attacker,(Summon) defender);
-                if(p2.getBelow().getCards().contains(attacker)){
+                if(p[1].getBelow().getCards().contains(attacker)){
                     attacker.getCardArt().setFill(Color.BROWN);
                 }
-                if(p1.getBelow().getCards().contains(defender)){
+                if(p[0].getBelow().getCards().contains(defender)){
                     defender.getCardArt().setFill(Color.BROWN);
                 }
             }
@@ -203,14 +187,14 @@ public class GameMaster extends Application {
     }
 
     private void allowMouseToAccessCardsInHandP2(EventHandler<MouseEvent> dragged, EventHandler<MouseEvent> dropped) {
-        for (Card card : p2.getCardsInHand().getCards()) {
+        for (Card card : p[1].getCardsInHand().getCards()) {
             card.getCardArt().addEventFilter(MouseEvent.MOUSE_DRAGGED, dragged);
             card.getCardArt().addEventFilter(MouseEvent.MOUSE_RELEASED, dropped);
         }
     }
 
     private void allowMouseToAccessCardsInHandP1(EventHandler<MouseEvent> dragged, EventHandler<MouseEvent> dropped) {
-        for (Card card : p1.getCardsInHand().getCards()) {
+        for (Card card : p[0].getCardsInHand().getCards()) {
             card.getCardArt().addEventFilter(MouseEvent.MOUSE_DRAGGED, dragged);
             card.getCardArt().addEventFilter(MouseEvent.MOUSE_RELEASED, dropped);
         }
@@ -218,11 +202,11 @@ public class GameMaster extends Application {
 
 
     private void drawCardsInHandP2() {
-        for (int i = 0; i < p2.getCardsInHand().getCards().size(); i++) {
-            Rectangle rectangle = p2.getCardsInHand().getCards().get(i).getCardArt();
-            rectangle.setX(500 + i * 600 / p2.getCardsInHand().getCards().size());
+        for (int i = 0; i < p[1].getCardsInHand().getCards().size(); i++) {
+            Rectangle rectangle = p[1].getCardsInHand().getCards().get(i).getCardArt();
+            rectangle.setX(500 + i * 600 / p[1].getCardsInHand().getCards().size());
             rectangle.setY(0);
-            p2.getCardsInHand().getCards().get(i).setCardArt(rectangle);
+            p[1].getCardsInHand().getCards().get(i).setCardArt(rectangle);
             if (!root.getChildren().contains(rectangle)) {
                 root.getChildren().add(rectangle);
             }
@@ -230,11 +214,11 @@ public class GameMaster extends Application {
     }
 
     private void drawCardsInHandP1() {
-        for (int i = 0; i < p1.getCardsInHand().getCards().size(); i++) {
-            Rectangle rectangle = p1.getCardsInHand().getCards().get(i).getCardArt();
-            rectangle.setX(500 + i * 600 / p1.getCardsInHand().getCards().size());
+        for (int i = 0; i < p[0].getCardsInHand().getCards().size(); i++) {
+            Rectangle rectangle = p[0].getCardsInHand().getCards().get(i).getCardArt();
+            rectangle.setX(500 + i * 600 / p[0].getCardsInHand().getCards().size());
             rectangle.setY(700);
-            p1.getCardsInHand().getCards().get(i).setCardArt(rectangle);
+            p[0].getCardsInHand().getCards().get(i).setCardArt(rectangle);
             if (!root.getChildren().contains(rectangle)) {
                 root.getChildren().add(rectangle);
             }
@@ -244,13 +228,13 @@ public class GameMaster extends Application {
     private void newTurn() {
         turn++;
         if (turn % 2 == 1) {
-            drawCardAndGetManaCheck(p1);
+            drawCardAndGetManaCheck(p[0]);
             drawCardsInHandP1();
-            setSummonsToUntapped(p1);
+            setSummonsToUntapped(p[0]);
         } else {
-            drawCardAndGetManaCheck(p2);
+            drawCardAndGetManaCheck(p[1]);
             drawCardsInHandP2();
-            setSummonsToUntapped(p2);
+            setSummonsToUntapped(p[1]);
         }
     }
 
@@ -292,16 +276,16 @@ public class GameMaster extends Application {
     }
 
     private void drawBattleFieldSummons() {
-        for (int i = 0; i < p1.getBattleField().getCards().size(); i++){
-            Rectangle rectangle = p1.getBattleField().getCards().get(i).getCardArt();
+        for (int i = 0; i < p[0].getBattleField().getCards().size(); i++){
+            Rectangle rectangle = p[0].getBattleField().getCards().get(i).getCardArt();
             rectangle.setX(650 + 150 * i);
             rectangle.setY(500);
             if(!root.getChildren().contains(rectangle)){
                 root.getChildren().add(rectangle);
             }
         }
-        for (int i = 0; i < p2.getBattleField().getCards().size(); i++){
-            Rectangle rectangle = p2.getBattleField().getCards().get(i).getCardArt();
+        for (int i = 0; i < p[1].getBattleField().getCards().size(); i++){
+            Rectangle rectangle = p[1].getBattleField().getCards().get(i).getCardArt();
             rectangle.setX(650 + 150 * i);
             rectangle.setY(300);
             if(!root.getChildren().contains(rectangle)){
@@ -314,7 +298,7 @@ public class GameMaster extends Application {
         Rectangle p1Cover = new Rectangle(1500, 800, 100, 50);
         p1Cover.setFill(Color.WHITE);
         root.getChildren().add(p1Cover);
-        Text manaCount1 = new Text(p1.getMana() + " / " + p1.getManaTotal());
+        Text manaCount1 = new Text(p[0].getMana() + " / " + p[0].getManaTotal());
         manaCount1.setX(1500);
         manaCount1.setY(850);
         root.getChildren().add(manaCount1);
@@ -322,7 +306,7 @@ public class GameMaster extends Application {
         Rectangle p2Cover = new Rectangle(1500, 0, 100, 50);
         p2Cover.setFill(Color.WHITE);
         root.getChildren().add(p2Cover);
-        Text manaCount2 = new Text(p2.getMana() + " / " + p2.getManaTotal());
+        Text manaCount2 = new Text(p[1].getMana() + " / " + p[1].getManaTotal());
         manaCount2.setX(1500);
         manaCount2.setY(50);
         root.getChildren().add(manaCount2);
