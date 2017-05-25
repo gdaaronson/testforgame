@@ -70,6 +70,13 @@ public class GameMaster extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Part of the battle process, this method updates the health of summons
+     * @param p the player who controls the summon
+     * @param summon the summon involved in battle
+     * @param newHealth the updated health of the summon
+     * @param attacker is the summon the attacker or defender
+     */
     private void updateBattleField(Player p, Summon summon, int newHealth, boolean attacker) {
         if (newHealth <= 0) {
             p.getBattleField().getCards().remove(summon);
@@ -82,16 +89,30 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * The battle process where player 2 is the attacker and player 1 is the defender
+     * @param attacker the summon attacking
+     * @param defender the summon defending
+     */
     private void battle21(Summon attacker, Summon defender) {
         updateBattleField(p[0], defender, defender.getHealth() - attacker.getAttack(), false);
         updateBattleField(p[1], attacker, attacker.getHealth() - defender.getAttack(), true);
     }
 
+    /**
+     * The battle process where player 1 is the attacker and player 2 is the defender
+     * @param attacker the summon attacking
+     * @param defender the summon defending
+     */
     private void battle12(Summon attacker, Summon defender) {
         updateBattleField(p[1], defender, defender.getHealth() - attacker.getAttack(), false);
         updateBattleField(p[0], attacker, attacker.getHealth() - defender.getAttack(), true);
     }
 
+    /**
+     * What happens when the mouse is dragged
+     * @param event the mouse event
+     */
     private void onDrag(MouseEvent event) {
         if (turn % 2 == 1) {
             locateAndMoveCard(event, p[0]);
@@ -100,6 +121,11 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * Finds the rectangle being clicked and moves it with the mouse
+     * @param event the mouse event
+     * @param p the player whose turn it is
+     */
     private void locateAndMoveCard(MouseEvent event, Player p) {
         Rectangle rectangleBeingClicked = (Rectangle) event.getSource();
         //TODO add more conditions so only certian cards can be dragged like if a summon, make sure the battlefield is of certian size
@@ -122,7 +148,12 @@ public class GameMaster extends Application {
         }
     }
 
-
+    /**
+     * Find the card that is going to be played
+     * @param event the mouse event
+     * @param p the player who is playing the card
+     * @return the card to be played, if not found it will be null
+     */
     private Card identifyCardToBePlayed(MouseEvent event,Player p){
         Rectangle rectangleBeingClicked = (Rectangle) event.getSource();
         for(Card card : p.getCardsInHand().getCards()) {
@@ -136,6 +167,12 @@ public class GameMaster extends Application {
         return null;
     }
 
+    /**
+     * Get the summon that is on the battle field
+     * @param event the mouse event
+     * @param p the player who is whose card we are identifying
+     * @return the summon
+     */
     private Card getCardFromBattleField(MouseEvent event, Player p){
         Rectangle rectangleBeingClicked = (Rectangle) event.getSource();
         for(Card card : p.getBattleField().getCards()){
@@ -146,6 +183,10 @@ public class GameMaster extends Application {
         return null;
     }
 
+    /**
+     * What occurs when the dragging of the mouse has stopped
+     * @param event the mouse event
+     */
     private void onDrop(MouseEvent event) {
         if (turn % 2 == 1) {
             Card cardToBePlayed = identifyCardToBePlayed(event, p[0]);
@@ -186,6 +227,11 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * Give player 2 access to his/her cards
+     * @param dragged the mouse event for dragging
+     * @param dropped the mouse event for dropping
+     */
     private void allowMouseToAccessCardsInHandP2(EventHandler<MouseEvent> dragged, EventHandler<MouseEvent> dropped) {
         for (Card card : p[1].getCardsInHand().getCards()) {
             card.getCardArt().addEventFilter(MouseEvent.MOUSE_DRAGGED, dragged);
@@ -193,6 +239,11 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * Give player 1 access to his/her cards
+     * @param dragged the mouse event for dragging
+     * @param dropped the mouse evnet for dropping
+     */
     private void allowMouseToAccessCardsInHandP1(EventHandler<MouseEvent> dragged, EventHandler<MouseEvent> dropped) {
         for (Card card : p[0].getCardsInHand().getCards()) {
             card.getCardArt().addEventFilter(MouseEvent.MOUSE_DRAGGED, dragged);
@@ -200,7 +251,9 @@ public class GameMaster extends Application {
         }
     }
 
-
+    /**
+     * Draw the cards in player 2 hand
+     */
     private void drawCardsInHandP2() {
         for (int i = 0; i < p[1].getCardsInHand().getCards().size(); i++) {
             Rectangle rectangle = p[1].getCardsInHand().getCards().get(i).getCardArt();
@@ -213,6 +266,9 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * Draw the cards in player 1 hand
+     */
     private void drawCardsInHandP1() {
         for (int i = 0; i < p[0].getCardsInHand().getCards().size(); i++) {
             Rectangle rectangle = p[0].getCardsInHand().getCards().get(i).getCardArt();
@@ -225,6 +281,9 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * Does the upkeep for starting a new turn
+     */
     private void newTurn() {
         turn++;
         if (turn % 2 == 1) {
@@ -238,6 +297,10 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * Sets the summons so that they are allowed to attack
+     * @param p the player who controls the summons
+     */
     private void setSummonsToUntapped(Player p) {
         for (Card summon : p.getBattleField().getCards()) {
             if (summon instanceof Summon) {
@@ -246,6 +309,10 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * Distributes the mana and cards for the beginning of the turn
+     * @param p
+     */
     private void drawCardAndGetManaCheck(Player p) {
         if (turn < 10) {
             p.drawCard();
@@ -261,6 +328,9 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * Draws the battle field
+     */
     private void drawBattleField() {
         Rectangle battleFieldImage = new Rectangle(0, 250, 1600, 400);
         battleFieldImage.setFill(Color.BROWN);
@@ -268,6 +338,9 @@ public class GameMaster extends Application {
         drawLinesOnBattleField();
     }
 
+    /**
+     * Draws the lines on the battle field
+     */
     private void drawLinesOnBattleField() {
         root.getChildren().add(new Line(0, 250, 1600, 250));
         root.getChildren().add(new Line(0, 450, 1600, 450));
@@ -275,6 +348,9 @@ public class GameMaster extends Application {
         root.getChildren().add(new Line(600, 250, 600, 650));
     }
 
+    /**
+     * Draws the summons on the battle field
+     */
     private void drawBattleFieldSummons() {
         for (int i = 0; i < p[0].getBattleField().getCards().size(); i++){
             Rectangle rectangle = p[0].getBattleField().getCards().get(i).getCardArt();
@@ -294,6 +370,9 @@ public class GameMaster extends Application {
         }
     }
 
+    /**
+     * Draws the amount of mana each player has
+     */
     private void drawManaInfo() {
         Rectangle p1Cover = new Rectangle(1500, 800, 100, 50);
         p1Cover.setFill(Color.WHITE);
