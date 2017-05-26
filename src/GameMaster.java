@@ -15,16 +15,38 @@ import javafx.stage.Stage;
  * Created by Greg on 5/18/2017.
  */
 public class GameMaster extends Application {
-    
+
+    /**
+     * The players, hopefully there are only 2
+     */
     private Player[] p;
+
+    /**
+     * The turn tracker
+     */
     private int turn;
+
+    /**
+     * The group needed the the scene in the GUI
+     */
     private Group root;
 
+    /**
+     * The main method
+     *
+     * @param args the default java opening
+     */
     public static void main(String args[]) {
         launch(args);
     }
 
 
+    /**
+     * The real main method that does the GUI
+     *
+     * @param primaryStage I'm not quite sure what this is but it is needed
+     * @throws Exception I'm not quite sure what exception this is refering to
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         //declare and initalize stuff
@@ -55,9 +77,9 @@ public class GameMaster extends Application {
         endTurnButton.setOnAction(event -> {
             newTurn();
             drawManaInfo();
-            if(turn % 2 == 1){
+            if (turn % 2 == 1) {
                 allowMouseToAccessCardsInHandP1(onDrag, onDrop);
-            }else {
+            } else {
                 allowMouseToAccessCardsInHandP2(onDrag, onDrop);
             }
         });
@@ -72,10 +94,11 @@ public class GameMaster extends Application {
 
     /**
      * Part of the battle process, this method updates the health of summons
-     * @param p the player who controls the summon
-     * @param summon the summon involved in battle
+     *
+     * @param p         the player who controls the summon
+     * @param summon    the summon involved in battle
      * @param newHealth the updated health of the summon
-     * @param attacker is the summon the attacker or defender
+     * @param attacker  is the summon the attacker or defender
      */
     private void updateBattleField(Player p, Summon summon, int newHealth, boolean attacker) {
         if (newHealth <= 0) {
@@ -83,7 +106,7 @@ public class GameMaster extends Application {
             p.getBelow().getCards().add(summon);
         } else {
             summon.setHealth(newHealth);
-            if(attacker){
+            if (attacker) {
                 summon.setAttacked(true);
             }
         }
@@ -91,6 +114,7 @@ public class GameMaster extends Application {
 
     /**
      * The battle process where player 2 is the attacker and player 1 is the defender
+     *
      * @param attacker the summon attacking
      * @param defender the summon defending
      */
@@ -101,6 +125,7 @@ public class GameMaster extends Application {
 
     /**
      * The battle process where player 1 is the attacker and player 2 is the defender
+     *
      * @param attacker the summon attacking
      * @param defender the summon defending
      */
@@ -111,6 +136,7 @@ public class GameMaster extends Application {
 
     /**
      * What happens when the mouse is dragged
+     *
      * @param event the mouse event
      */
     private void onDrag(MouseEvent event) {
@@ -123,22 +149,23 @@ public class GameMaster extends Application {
 
     /**
      * Finds the rectangle being clicked and moves it with the mouse
+     *
      * @param event the mouse event
-     * @param p the player whose turn it is
+     * @param p     the player whose turn it is
      */
     private void locateAndMoveCard(MouseEvent event, Player p) {
         Rectangle rectangleBeingClicked = (Rectangle) event.getSource();
         //TODO add more conditions so only certian cards can be dragged like if a summon, make sure the battlefield is of certian size
-        for(Card card : p.getCardsInHand().getCards()){
-            if(card.getCardArt().equals(rectangleBeingClicked)){
-                if(card.getManaCost() <= p.getMana()) {
+        for (Card card : p.getCardsInHand().getCards()) {
+            if (card.getCardArt().equals(rectangleBeingClicked)) {
+                if (card.getManaCost() <= p.getMana()) {
                     rectangleBeingClicked.setX(event.getX());
                     rectangleBeingClicked.setY(event.getY());
                 }
             }
         }
-        for(Card card : p.getBattleField().getCards()){
-            if(card.getCardArt().equals(rectangleBeingClicked)) {
+        for (Card card : p.getBattleField().getCards()) {
+            if (card.getCardArt().equals(rectangleBeingClicked)) {
                 Summon summon = (Summon) card;
                 if (!summon.hasAttacked()) {
                     rectangleBeingClicked.setX(event.getX());
@@ -150,13 +177,14 @@ public class GameMaster extends Application {
 
     /**
      * Find the card that is going to be played
+     *
      * @param event the mouse event
-     * @param p the player who is playing the card
+     * @param p     the player who is playing the card
      * @return the card to be played, if not found it will be null
      */
-    private Card identifyCardToBePlayed(MouseEvent event,Player p){
+    private Card identifyCardToBePlayed(MouseEvent event, Player p) {
         Rectangle rectangleBeingClicked = (Rectangle) event.getSource();
-        for(Card card : p.getCardsInHand().getCards()) {
+        for (Card card : p.getCardsInHand().getCards()) {
             if (rectangleBeingClicked.intersects(card.getCardArt().getLayoutBounds())) {
                 Card cardBeingClicked = p.getCardsInHand().getCard(rectangleBeingClicked);
                 if (cardBeingClicked.getManaCost() <= p.getMana() && p.getBattleField().getCards().size() < 5) {
@@ -169,13 +197,14 @@ public class GameMaster extends Application {
 
     /**
      * Get the summon that is on the battle field
+     *
      * @param event the mouse event
-     * @param p the player who is whose card we are identifying
+     * @param p     the player who is whose card we are identifying
      * @return the summon
      */
-    private Card getCardFromBattleField(MouseEvent event, Player p){
+    private Card getCardFromBattleField(MouseEvent event, Player p) {
         Rectangle rectangleBeingClicked = (Rectangle) event.getSource();
-        for(Card card : p.getBattleField().getCards()){
+        for (Card card : p.getBattleField().getCards()) {
             if (rectangleBeingClicked.intersects(card.getCardArt().getLayoutBounds())) {
                 return card;
             }
@@ -185,41 +214,42 @@ public class GameMaster extends Application {
 
     /**
      * What occurs when the dragging of the mouse has stopped
+     *
      * @param event the mouse event
      */
     private void onDrop(MouseEvent event) {
         if (turn % 2 == 1) {
             Card cardToBePlayed = identifyCardToBePlayed(event, p[0]);
-            if(cardToBePlayed != null){
+            if (cardToBePlayed != null) {
                 p[0].playCard(cardToBePlayed);
                 return;
             }
             Card attacker = getCardFromBattleField(event, p[0]);
             Card defender = getCardFromBattleField(event, p[1]);
-            if(attacker != null && defender != null){
-                battle12((Summon) attacker,(Summon) defender);
-                if(p[0].getBelow().getCards().contains(attacker)){
+            if (attacker != null && defender != null) {
+                battle12((Summon) attacker, (Summon) defender);
+                if (p[0].getBelow().getCards().contains(attacker)) {
                     attacker.getCardArt().setFill(Color.BROWN);
                 }
-                if(p[1].getBelow().getCards().contains(defender)){
+                if (p[1].getBelow().getCards().contains(defender)) {
                     defender.getCardArt().setFill(Color.BROWN);
                 }
             }
             drawCardsInHandP1();
         } else if (turn % 2 == 0) {
             Card cardToBePlayed = identifyCardToBePlayed(event, p[1]);
-            if(cardToBePlayed != null){
+            if (cardToBePlayed != null) {
                 p[1].playCard(cardToBePlayed);
                 return;
             }
             Card attacker = getCardFromBattleField(event, p[1]);
             Card defender = getCardFromBattleField(event, p[0]);
-            if(attacker != null && defender != null){
-                battle21((Summon) attacker,(Summon) defender);
-                if(p[1].getBelow().getCards().contains(attacker)){
+            if (attacker != null && defender != null) {
+                battle21((Summon) attacker, (Summon) defender);
+                if (p[1].getBelow().getCards().contains(attacker)) {
                     attacker.getCardArt().setFill(Color.BROWN);
                 }
-                if(p[0].getBelow().getCards().contains(defender)){
+                if (p[0].getBelow().getCards().contains(defender)) {
                     defender.getCardArt().setFill(Color.BROWN);
                 }
             }
@@ -229,6 +259,7 @@ public class GameMaster extends Application {
 
     /**
      * Give player 2 access to his/her cards
+     *
      * @param dragged the mouse event for dragging
      * @param dropped the mouse event for dropping
      */
@@ -241,6 +272,7 @@ public class GameMaster extends Application {
 
     /**
      * Give player 1 access to his/her cards
+     *
      * @param dragged the mouse event for dragging
      * @param dropped the mouse evnet for dropping
      */
@@ -299,6 +331,7 @@ public class GameMaster extends Application {
 
     /**
      * Sets the summons so that they are allowed to attack
+     *
      * @param p the player who controls the summons
      */
     private void setSummonsToUntapped(Player p) {
@@ -311,6 +344,7 @@ public class GameMaster extends Application {
 
     /**
      * Distributes the mana and cards for the beginning of the turn
+     *
      * @param p
      */
     private void drawCardAndGetManaCheck(Player p) {
@@ -352,19 +386,19 @@ public class GameMaster extends Application {
      * Draws the summons on the battle field
      */
     private void drawBattleFieldSummons() {
-        for (int i = 0; i < p[0].getBattleField().getCards().size(); i++){
+        for (int i = 0; i < p[0].getBattleField().getCards().size(); i++) {
             Rectangle rectangle = p[0].getBattleField().getCards().get(i).getCardArt();
             rectangle.setX(650 + 150 * i);
             rectangle.setY(500);
-            if(!root.getChildren().contains(rectangle)){
+            if (!root.getChildren().contains(rectangle)) {
                 root.getChildren().add(rectangle);
             }
         }
-        for (int i = 0; i < p[1].getBattleField().getCards().size(); i++){
+        for (int i = 0; i < p[1].getBattleField().getCards().size(); i++) {
             Rectangle rectangle = p[1].getBattleField().getCards().get(i).getCardArt();
             rectangle.setX(650 + 150 * i);
             rectangle.setY(300);
-            if(!root.getChildren().contains(rectangle)){
+            if (!root.getChildren().contains(rectangle)) {
                 root.getChildren().add(rectangle);
             }
         }

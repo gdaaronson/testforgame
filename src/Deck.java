@@ -28,10 +28,19 @@ public class Deck {
         cards = new ArrayList<>();
     }
 
+    /**
+     * Gets the Card objects in the deck
+     * @return the Card objects
+     */
     public List<Card> getCards() {
         return cards;
     }
 
+    /**
+     * Gets a specific card based on its 'art'
+     * @param cardArt the 'art' from the GUI
+     * @return the Card object
+     */
     public Card getCard(Rectangle cardArt){
         for(Card card: cards){
             if(cardArt.equals(card.getCardArt())){

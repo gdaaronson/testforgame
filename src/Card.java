@@ -5,8 +5,8 @@ import javafx.scene.shape.Rectangle;
  */
 public class Card {
 
-    private int manaCost;
-    private Rectangle cardArt;
+    int manaCost;
+    Rectangle cardArt;
 
     public Rectangle getCardArt() {
         return cardArt;
